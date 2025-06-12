@@ -12,13 +12,12 @@
 #define PIN_SDA            21
 #define PIN_SCL            22
 #define FRECUENCIA_I2C     400000
-#define DELAY              50
-
+#define DELAY              1000
+#define UMBRAL_MOVIMIENTO  30
 // Variables globales
 extern bool calibracionSolicitada;
 extern bool dmpListo;
 extern float compensacionYPR[3];
-
 // Configuración inicial
 void iniciar_comunicacion_serial();
 void configurar_pines();

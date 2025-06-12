@@ -41,7 +41,7 @@ void configurar_mpu6050() {
 
 void verificarBoton() {
   int estadoBoton = digitalRead(PIN_BOTON);
-  if (estadoBoton == LOW && millis() - ultimoTiempoDebounce > RETRASO_DEBOUNCE) {
+  if (estadoBoton == HIGH && millis() - ultimoTiempoDebounce > RETRASO_DEBOUNCE) {
     calibracionSolicitada = true;
     ultimoTiempoDebounce = millis();
   }
@@ -75,10 +75,27 @@ void leerYMostrarDatosMPU() {
     int ejeY = constrain(pitchCalibrado * 180/M_PI, -90, 90);
     int ejeZ = constrain(yawCalibrado * 180/M_PI, -90, 90);
 
-    Serial.print("Yaw: "); Serial.print(ejeZ);
-    Serial.print("  Pitch: "); Serial.print(ejeY);
-    Serial.print("  Roll: "); Serial.println(ejeX);
-    
-    delay(DELAY);
+    if (abs(ejeY) > UMBRAL_MOVIMIENTO || abs(ejeX) > UMBRAL_MOVIMIENTO) {
+    if (abs(ejeY) > abs(ejeX)) {
+      // Movimiento predominante en pitch (eje Y)
+      if (ejeY > 0) {
+        Serial.println("Adelante");
+        // Aquí puedes añadir acciones para movimiento adelante
+      } else {
+        Serial.println("Atras");
+        // Aquí puedes añadir acciones para movimiento atrás
+      }
+    } else {
+      // Movimiento predominante en roll (eje X)
+      if (ejeX < 0) {
+        Serial.println("Derecha");
+        // Aquí puedes añadir acciones para movimiento derecha
+      } else {
+        Serial.println("Izquierda");
+        // Aquí puedes añadir acciones para movimiento izquierda
+      }
+    }
   }
+  }
+  delay(DELAY);
 }

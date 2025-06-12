@@ -7,11 +7,12 @@ void setup() {
 }
 
 void loop() {
-  verificarBoton();
+  //verificarBoton();
   if (calibracionSolicitada) {
     calibrarMPU();
     calibracionSolicitada = false;
   }
   if (!dmpListo) return;
   leerYMostrarDatosMPU();
+
 }
